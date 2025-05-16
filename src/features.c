@@ -24,3 +24,19 @@ void dimension (char *source_path){
     
     printf("Dimension : %d, %d\n",width,height);
 }
+
+void dimension (char *source_path) {
+    int width , height , channel_count;
+    unsigned char *data;
+    read_image_data(source_path , &data , &width , &height , &channel_count);
+
+    printf("dimension: %d, %d\n",width,height);
+}
+
+void first_pixel(char *source_path) {
+    int width , height , channel_count;
+    unsigned char *data;
+    read_image_data(source_path , &data , &width , &height , &channel_count);
+
+    printf("first_pixel: %d, %d, %d\n",data[0],data[1],data[2]);
+}
