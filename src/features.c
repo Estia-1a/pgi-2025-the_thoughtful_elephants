@@ -12,40 +12,18 @@
  */
 
 void helloWorld() {
-    printf("Hello World !!!");
+    printf("Hello World !");
 }
 
-/*void dimension(char *source_path){
-    int width, height, channel_count ;
-    unsigned char *data ; 
-    read_image_data(source_path, &data, &width, &height, &channel_count);
+void dimension (char *source_path){
 
-    printf("dimension : %d, %d\n", width, height);
-}*/
-
-/*void first_pixel(char *source_path){
+    unsigned char *data;
     int width, height, channel_count;
-    unsigned char *data ;
+    
     read_image_data(source_path, &data, &width, &height, &channel_count);
-
-    int  R = data[0];
-    int  G = data[1];
-    int  B = data[2];
-
-    printf("first pixel : %d, %d, %d\n", R, G, B);
-}*/
-
-/*void first_pixel(char *source_path){
-    int width, height, channel_count;
-    unsigned char *data ;
-    read_image_data(source_path, &data, &width, &height, &channel_count);
-
-    int  R = data[0];
-    int  G = data[1];
-    int  B = data[2];
-
-    printf("first pixel : %d, %d, %d\n", R, G, B);
-}*/
+    
+    printf("Dimension : %d, %d\n",width,height);
+}
 
 void dimension (char *source_path) {
     int width , height , channel_count;
@@ -59,7 +37,6 @@ void first_pixel(char *source_path) {
     int width , height , channel_count;
     unsigned char *data;
     read_image_data(source_path , &data , &width , &height , &channel_count);
-
     printf("first_pixel: %d, %d, %d\n",data[0],data[1],data[2]);
 }
 
@@ -68,7 +45,7 @@ void tenth_pixel(char *source_path) {
     unsigned char *data;
     read_image_data(source_path , &data , &width , &height , &channel_count);
 
-    printf("first_pixel: %d, %d, %d\n",data[27],data[28],data[29]);
+    printf("tenth_pixel: %d, %d, %d\n",data[27],data[28],data[29]);
 }
 
 void second_line(char *source_path) {
@@ -76,5 +53,5 @@ void second_line(char *source_path) {
     unsigned char *data;
     read_image_data(source_path , &data , &width , &height , &channel_count);
 
-    printf("second_line : %d, %d, %d\n",data[27],data[28],data[29]);
+    printf("second_line: %d, %d, %d\n",data[3 * width * 1 + 0],data[3 * width * 1 + 1],data[3 * width * 1 + 2]);
 }
