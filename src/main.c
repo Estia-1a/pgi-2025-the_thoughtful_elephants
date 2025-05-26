@@ -48,12 +48,13 @@ int main(int argc, char **argv) {
   }
 
   if ( strncmp( configuration.command, "second_line", 11 ) == 0 ) {
-    /* dimension() function is defined in feature.h and implemented in feature.c */
     second_line( configuration.filenames[0] );
   }
-  /*
-   * TO COMPLETE
-   */
-  
+
+  if ( strncmp( configuration.command, "print_pixel", 11 ) == 0 ) {
+    print_pixel( configuration.filenames[0] , 200 , 200 );
+  }
+
+
   return 0;
 }
