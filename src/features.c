@@ -25,14 +25,6 @@ void dimension (char *source_path){
     printf("Dimension : %d, %d\n",width,height);
 }
 
-void dimension (char *source_path) {
-    int width , height , channel_count;
-    unsigned char *data;
-    read_image_data(source_path , &data , &width , &height , &channel_count);
-
-    printf("dimension: %d, %d\n",width,height);
-}
-
 void first_pixel(char *source_path) {
     int width , height , channel_count;
     unsigned char *data;
@@ -54,4 +46,15 @@ void second_line(char *source_path) {
     read_image_data(source_path , &data , &width , &height , &channel_count);
 
     printf("second_line: %d, %d, %d\n",data[3 * width * 1 + 0],data[3 * width * 1 + 1],data[3 * width * 1 + 2]);
+}
+
+void print_pixel( char *filename, int x, int y ) {
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+ 
+    read_image_data (filename, &data, &width, &height, &channels);
+    pixelRGB *pixel = get_pixel(data, width, height, channels, x, y);
+    printf("print_pixel (%d, %d): %d, %d, %d\n", x, y, pixel->R, pixel->G, pixel->B);
+ 
+    free_image_data(data);
 }
