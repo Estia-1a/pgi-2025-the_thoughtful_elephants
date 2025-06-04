@@ -57,4 +57,14 @@ int main(int argc, char **argv) {
       int y = atoi(configuration.arguments[1]);
       print_pixel(configuration.filenames[0], x, y);
   }
+  if ( strncmp( configuration.command, "max_component", 12 ) == 0 ) {
+    /* max_component() function is defined in feature.h and implemented in feature.c */
+    char color=configuration.arguments[0][0];
+    max_component( configuration.filenames[0],color );
+  }
+  if ( strncmp( configuration.command, "min_component", 12 ) == 0 ) {
+    /* min_component() function is defined in feature.h and implemented in feature.c */
+    char color=configuration.arguments[0][0];
+    min_component( configuration.filenames[0],color );
+  }
 }
