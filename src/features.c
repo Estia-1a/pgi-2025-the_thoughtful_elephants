@@ -58,6 +58,59 @@ void print_pixel( char *filename, int x, int y ) {
  
     free_image_data(data);
 }
+void max_pixel(char *filename){
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+    int somme=0; 
+    int xmax=0; 
+    int ymax=0;
+    int r=0;
+    int g=0;
+    int b=0;
+    read_image_data (filename, &data, &width, &height, &channels);
+    for (int y=0;y<height;y++){
+        for (int x=0;x<width;x++){
+            pixelRGB *pixel = get_pixel(data, width, height, channels, x, y);
+            if (somme<((pixel->R)+(pixel->G)+(pixel->B))){
+                somme=((pixel->R)+(pixel->G)+(pixel->B));
+                xmax = x;
+                ymax = y;
+                r=pixel->R;
+                g=pixel->G;
+                b=pixel->B;
+            }
+        }
+    }
+printf("max_pixel (%d, %d): %d , %d , %d\n", xmax, ymax, r,g,b);
+
+}
+void min_pixel(char *filename){
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+    int somme=1000000; 
+    int xmin=0; 
+    int ymin=0;
+    int r=0;
+    int g=0;
+    int b=0;
+    read_image_data (filename, &data, &width, &height, &channels);
+    for (int y=0;y<height;y++){
+        for (int x=0;x<width;x++){
+            pixelRGB *pixel = get_pixel(data, width, height, channels, x, y);
+            if (somme>((pixel->R)+(pixel->G)+(pixel->B))){
+                somme=((pixel->R)+(pixel->G)+(pixel->B));
+                xmin = x;
+                ymin = y;
+                r=pixel->R;
+                g=pixel->G;
+                b=pixel->B;
+            }
+        }
+    }
+printf("min_pixel (%d, %d): %d , %d , %d\n", xmin, ymin, r,g,b);
+
+}
+
 void max_component(char *filename, char color){
     unsigned char *data = NULL;
     int width = 0, height = 0, channels = 0;
