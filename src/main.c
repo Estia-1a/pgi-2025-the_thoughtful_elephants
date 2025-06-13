@@ -106,28 +106,31 @@ int main(int argc, char **argv) {
     /* stat_report() function is defined in feature.h and implemented in feature.c */
     mirror_horizontal( configuration.filenames[0]);
   }
-if ( strncmp( configuration.command, "rotate_acw", 24 ) == 0 ) {
+  if ( strncmp( configuration.command, "rotate_acw", 25 ) == 0 ) {
     /* rotate_acw() function is defined in feature.h and implemented in feature.c */
     rotate_acw( configuration.filenames[0]);
- }  if ( strncmp( configuration.command, "mirror_vertical", 24 ) == 0 ) {
+ }  
+  if ( strncmp( configuration.command, "mirror_vertical", 24 ) == 0 ) {
     /* stat_report() function is defined in feature.h and implemented in feature.c */
     mirror_vertical( configuration.filenames[0]);
   }
   if ( strncmp( configuration.command, "scale_crop", 25 ) == 0 ) {
-      int x = atoi(configuration.arguments[0]);
-      int y = atoi(configuration.arguments[1]);
-      int new_width = atoi(configuration.arguments[2]);
-      int new_height = atoi(configuration.arguments[3]);
-      scale_crop(configuration.filenames[0], x, y, new_width, new_height);
+    int x = atoi(configuration.arguments[0]);
+    int y = atoi(configuration.arguments[1]);
+    int new_width = atoi(configuration.arguments[2]);
+    int new_height = atoi(configuration.arguments[3]);
+    scale_crop(configuration.filenames[0], x, y, new_width, new_height);
   }
   if ( strncmp( configuration.command, "mirror_total", 24 ) == 0 ) {
     /* mirror_total() function is defined in feature.h and implemented in feature.c */
     mirror_total( configuration.filenames[0]);
-  if ( strncmp( configuration.command, "scale_nearest", 26 ) == 0 ) {
-   
-      int a = atoi(configuration.arguments[0]);
-      scale_nearest(configuration.filenames[0], a);
   }
-
-
+  if ( strncmp( configuration.command, "scale_nearest", 26 ) == 0 ) {
+    int a = atoi(configuration.arguments[0]);
+    scale_nearest(configuration.filenames[0], a);
+  }
+  if ( strncmp( configuration.command, "color_desaturate", 26 ) == 0 ) {
+    /* stat_report() function is defined in feature.h and implemented in feature.c */
+    color_desaturate( configuration.filenames[0]);
+  }
 }
