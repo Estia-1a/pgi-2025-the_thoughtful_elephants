@@ -87,22 +87,29 @@ int main(int argc, char **argv) {
     color_blue( configuration.filenames[0]);
   }
   if ( strncmp( configuration.command, "color_gray", 20 ) == 0 ) {
-    /* color_blue() function is defined in feature.h and implemented in feature.c */
+    /* color_gray() function is defined in feature.h and implemented in feature.c */
     color_gray( configuration.filenames[0]);
   }
   if ( strncmp( configuration.command, "color_invert", 21 ) == 0 ) {
-    /* color_blue() function is defined in feature.h and implemented in feature.c */
+    /* color_invert() function is defined in feature.h and implemented in feature.c */
     color_invert( configuration.filenames[0]);
   }
   if ( strncmp( configuration.command, "color_gray_luminance", 22 ) == 0 ) {
-    /* color_blue() function is defined in feature.h and implemented in feature.c */
+    /* color_gray_luminance() function is defined in feature.h and implemented in feature.c */
     color_gray_luminance( configuration.filenames[0]);
   }
+ if ( strncmp( configuration.command, "rotate_cw", 23 ) == 0 ) {
+    /* rotate_cw() function is defined in feature.h and implemented in feature.c */
+    rotate_cw( configuration.filenames[0]);
+ }
   if ( strncmp( configuration.command, "mirror_horizontal", 23 ) == 0 ) {
     /* stat_report() function is defined in feature.h and implemented in feature.c */
     mirror_horizontal( configuration.filenames[0]);
   }
-  if ( strncmp( configuration.command, "mirror_vertical", 24 ) == 0 ) {
+if ( strncmp( configuration.command, "rotate_acw", 24 ) == 0 ) {
+    /* rotate_acw() function is defined in feature.h and implemented in feature.c */
+    rotate_acw( configuration.filenames[0]);
+ }  if ( strncmp( configuration.command, "mirror_vertical", 24 ) == 0 ) {
     /* stat_report() function is defined in feature.h and implemented in feature.c */
     mirror_vertical( configuration.filenames[0]);
   }

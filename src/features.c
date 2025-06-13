@@ -148,7 +148,7 @@ void max_component(char *filename, char color){
         }
     }
     printf("max_component %c (%d, %d): %d\n",color, xmax, ymax, a);
-
+    
 }
 void min_component(char *filename, char color){
     unsigned char *data = NULL;
@@ -188,7 +188,26 @@ void min_component(char *filename, char color){
     
 printf("min_component %c (%d, %d): %d\n",color, xmin, ymin, a);
 
+
+
 }
+void stat_report(char *filename){
+    FILE *file = fopen("stat_report.txt", "w");
+    
+
+    fprintf(file, "Test\n\n");
+  /*fprintf(file, "%s\n\n", min_pixel);
+    fprintf(file, "%s\n\n", max_component R);
+    fprintf(file, "%s\n\n", max_component G);
+    fprintf(file, "max_component B: %d\n\n", max_component B);
+    fprintf(file, "min_component R: %d\n\n", min_component R);
+    fprintf(file, "min_component G: %d\n\n", min_component G);
+    fprintf(file, "min_component B: %d\n\n", min_component B);
+*/
+    fclose(file);
+}
+
+
 void color_red( char* filename) {
     int width, height, channels;
     unsigned char *data = NULL;
@@ -296,6 +315,63 @@ void color_gray_luminance(char*filename){
         free_image_data(data);
     }
 }
+
+void rotate_cw(char*filename){
+    int width,height,channels;
+    unsigned char*data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    int new_width=height;
+    int new_height= width;
+
+    unsigned char *rotate_90 = (unsigned char*)malloc(new_width* new_height* channels);
+    
+    for(int j=0; j<height; j++){
+        for(int i=0; i<width; i++){
+
+            int src_idx = (j *width +i)*channels;
+            int dst_idx = (i*new_width + (new_width -1 -j))*channels;
+
+            for(int c=0; c< channels; c++){
+                rotate_90[dst_idx + c] = data[src_idx + c];
+
+            }
+
+        }
+    }
+     if (write_image_data("image_out.bmp", rotate_90, new_width, new_height) !=0) {
+        free_image_data(rotate_90);
+     }
+}
+void rotate_acw(char*filename){
+     int width,height,channels;
+    unsigned char*data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    int new_width=height;
+    int new_height= width;
+    unsigned char *rotate_a90 = (unsigned char*)malloc(new_width* new_height* channels);
+    
+    for(int j=0; j<height; j++){
+        for(int i=0; i<width; i++){
+
+            int src_idx = (j *width +i)*channels;
+            int dst_idx = ((width -1 -i)*new_width +j)*channels;
+
+            for(int c=0; c< channels; c++){
+                rotate_a90[dst_idx + c] = data[src_idx + c];
+
+            }
+
+        }
+    }
+     if (write_image_data("image_out.bmp", rotate_a90, new_width, new_height) !=0) {
+        free_image_data(rotate_a90);
+     }
+}
+
 
 void mirror_horizontal(char* filename){
     int width,height,channels;
