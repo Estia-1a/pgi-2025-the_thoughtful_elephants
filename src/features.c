@@ -190,12 +190,12 @@ printf("min_component %c (%d, %d): %d\n",color, xmin, ymin, a);
 
 
 
+
 }
 void stat_report(char *filename){
     FILE *file = fopen("stat_report.txt", "w");
     
-
-    fprintf(file, "Test\n\n");
+    fprintf(file, "Test");
   /*fprintf(file, "%s\n\n", min_pixel);
     fprintf(file, "%s\n\n", max_component R);
     fprintf(file, "%s\n\n", max_component G);
