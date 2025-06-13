@@ -12,6 +12,12 @@ void max_pixel(char* source_path);
 void min_pixel(char* source_path);
 void max_component(char* source_path, char color);
 void min_component(char* source_path, char color);
+void color_red(char* filename);
+void color_green(char*filename);
+void color_blue(char*filename);
+void color_gray(char*filename);
+void color_invert(char*filename);
+void color_gray_luminance(char*filename);
 void stat_report(char* source_path);
 
 #endif
