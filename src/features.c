@@ -424,5 +424,38 @@ void mirror_vertical(char* filename){
 }
 
 void scale_crop(char *filename, int x, int y, int new_width, int new_height){
+    int width,height,channels;
+    unsigned char*data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    unsigned char *scale_crop = (unsigned char*)malloc(new_width* new_height* channels);
+
+    int left   = x - new_width / 2;
+    int top    = y - new_height / 2;
     
+    for (int j=0; j<new_height; j++){
+        for (int i=0; i<new_width; i++){
+            int src_x = left + i;
+            int src_y = top + j;
+            
+            if (src_x < 0 || src_x >= width || src_y < 0 || src_y >= height){
+                for (int c = 0; c< channels; c++){
+                    scale_crop[(j * new_width + i) * channels + c] = 0;
+                }
+            }
+            else{
+                int src_idx = (src_y * width + src_x) * channels;
+                int out_idx = (j * new_width + i) * channels;
+
+                for (int c = 0; c< channels; c++){
+                    scale_crop[out_idx + c] = data[src_idx + c];
+                }
+            }
+        }
+    }
+    
+    if (write_image_data("image_out.bmp", scale_crop, new_width, new_height)!=0){
+        free_image_data(data);
+    }
 }
