@@ -1,5 +1,6 @@
 #include <estia-image.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "features.h"
 #include "utils.h"
@@ -83,6 +84,7 @@ void max_pixel(char *filename){
 printf("max_pixel (%d, %d): %d, %d, %d\n", xmax, ymax, r,g,b);
 
 }
+
 void min_pixel(char *filename){
     unsigned char *data = NULL;
     int width = 0, height = 0, channels = 0;
@@ -314,3 +316,84 @@ void color_gray_luminance(char*filename){
     }
 }
 
+void rotate_cw(char*filename){
+    int width,height,channels;
+    unsigned char*data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    int new_width=height;
+    int new_height= width;
+
+    unsigned char *rotate_90 = (unsigned char*)malloc(new_width* new_height* channels);
+    
+    for(int j=0; j<height; j++){
+        for(int i=0; i<width; i++){
+
+            int src_idx = (j *width +i)*channels;
+            int dst_idx = (i*new_width + (new_width -1 -j))*channels;
+
+            for(int c=0; c< channels; c++){
+                rotate_90[dst_idx + c] = data[src_idx + c];
+
+            }
+
+        }
+    }
+     if (write_image_data("image_out.bmp", rotate_90, new_width, new_height) !=0) {
+        free_image_data(rotate_90);
+     }
+}
+void rotate_acw(char*filename){
+     int width,height,channels;
+    unsigned char*data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    int new_width=height;
+    int new_height= width;
+    unsigned char *rotate_a90 = (unsigned char*)malloc(new_width* new_height* channels);
+    
+    for(int j=0; j<height; j++){
+        for(int i=0; i<width; i++){
+
+            int src_idx = (j *width +i)*channels;
+            int dst_idx = ((width -1 -i)*new_width +j)*channels;
+
+            for(int c=0; c< channels; c++){
+                rotate_a90[dst_idx + c] = data[src_idx + c];
+
+            }
+
+        }
+    }
+     if (write_image_data("image_out.bmp", rotate_a90, new_width, new_height) !=0) {
+        free_image_data(rotate_a90);
+     }
+}
+
+
+void mirror_horizontal(char* filename){
+    int width,height,channels;
+    unsigned char*data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    unsigned char *mirror_horizontal = (unsigned char*)malloc(width* height* channels);
+    
+    for (int j=0; j<height; j++) {
+        for (int i=0; i<width; i++) {
+
+            int src_idx = (j*width + i) * channels;
+            int out_idx = (j*width + (width - 1 - i)) * channels;
+
+            for (int c=0; c<channels; c++){
+                mirror_horizontal[out_idx + c] = data[src_idx + c];
+            }
+        }
+    }
+    
+    if (write_image_data("image_out.bmp", mirror_horizontal, width, height)!=0){
+        free_image_data(data);
+    }
+}
