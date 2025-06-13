@@ -148,7 +148,7 @@ void max_component(char *filename, char color){
         }
     }
     printf("max_component %c (%d, %d): %d\n",color, xmax, ymax, a);
-
+    
 }
 void min_component(char *filename, char color){
     unsigned char *data = NULL;
@@ -188,25 +188,48 @@ void min_component(char *filename, char color){
     
 printf("min_component %c (%d, %d): %d\n",color, xmin, ymin, a);
 
-}
-void stat_report(char *filename){
-    /*unsigned char *data = NULL;
-    int width = 0, height = 0, channels = 0;
-    read_image_data (filename, &data, &width, &height, &channels);
-    FILE *fichier =fopen('stat_report.txt', 'w');
-    fprintf (fichier,'max_pixel( ');
-    max_pixel(filename);
-    fprintf(fichier,',');
-    min_pixel(filename);
-    max_component(filename, 'R');
-    max_component(filename, 'G');
-    max_component(filename, 'B');
-    min_component(filename, 'R');
-    min_component(filename, 'G');
-    min_component(filename, 'B');*/
+
+
+
+
 
 
 }
+void stat_report(char *source_path){
+    int width, height, channel_count;
+    unsigned char *data;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    FILE *stat_report;
+    stat_report = freopen("stat_report.txt", "w",stdout);
+    max_pixel(source_path);
+    printf("\n");
+    printf("\n");
+    min_pixel(source_path);
+    printf("\n");
+    printf("\n");
+    max_component(source_path,'R');
+    printf("\n");
+    printf("\n");
+    max_component(source_path,'G');
+    printf("\n");
+    printf("\n");
+    max_component(source_path,'B');
+    printf("\n");
+    printf("\n");
+    min_component(source_path,'R');
+    printf("\n");
+    printf("\n");
+    min_component(source_path,'G');
+    printf("\n");
+    printf("\n");
+    min_component(source_path,'B');
+    printf("\n");
+    printf("\n");
+    fclose(stat_report);
+    free_image_data(data);
+}
+
+
 void color_red( char* filename) {
     int width, height, channels;
     unsigned char *data = NULL;
@@ -392,28 +415,5 @@ void mirror_horizontal(char* filename){
     }
     if (write_image_data("image_out.bmp", mirror_horizontal, width, height)!=0){
         free_image_data(data);
-    }
-}
-
-void mirror_total(char*filename){
-    int width,height,channels;
-    unsigned char*data = NULL;
-    read_image_data(filename, &data, &width, &height, &channels);
-
-    unsigned char *mirror_total = (unsigned char*)malloc(width* height* channels);
-    
-    for (int j=0; j<height; j++) {
-        for (int i=0; i<width; i++) {
-
-            int src_idx = (j*width + i) * channels;
-            int dst_idx = ((height-1-j)*width + (width-1-i)) * channels;
-
-            for (int c=0; c<channels; c++){
-                mirror_total[dst_idx + c] = data[src_idx + c];
-            }
-        }
-    }
-    if (write_image_data("image_out.bmp", mirror_total, width, height)!=0){
-        free_image_data(mirror_total);
     }
 }
