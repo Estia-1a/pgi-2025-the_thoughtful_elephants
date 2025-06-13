@@ -1,6 +1,7 @@
 #include <estia-image.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "features.h"
 #include "utils.h"
@@ -202,29 +203,20 @@ void stat_report(char *source_path){
     FILE *stat_report;
     stat_report = freopen("stat_report.txt", "w",stdout);
     max_pixel(source_path);
-    printf("\n");
-    printf("\n");
+    printf("\n\n");
     min_pixel(source_path);
-    printf("\n");
-    printf("\n");
+    printf("\n\n");
     max_component(source_path,'R');
-    printf("\n");
-    printf("\n");
+    printf("\n\n");
     max_component(source_path,'G');
-    printf("\n");
-    printf("\n");
+    printf("\n\n");
     max_component(source_path,'B');
-    printf("\n");
-    printf("\n");
+    printf("\n\n");
     min_component(source_path,'R');
-    printf("\n");
-    printf("\n");
+    printf("\n\n");
     min_component(source_path,'G');
-    printf("\n");
-    printf("\n");
+    printf("\n\n");
     min_component(source_path,'B');
-    printf("\n");
-    printf("\n");
     fclose(stat_report);
     free_image_data(data);
 }
@@ -437,7 +429,108 @@ void mirror_total(char*filename){
             }
         }
     }
+
     if (write_image_data("image_out.bmp", mirror_total, width, height)!=0){
         free_image_data(mirror_total);
+    }
+}
+
+
+void color_desaturate(char *filename){
+    int width,height,channels;
+    unsigned char*data;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    unsigned char *desaturate_img = (unsigned char*)malloc(width* height* channels);
+
+    for (int j=0; j<height; j++){
+        for (int i=0; i<width; i++){
+
+            int idx = (j*width + i) * channels;
+
+            int r = data[idx];
+            int g = data[idx + 1];
+            int b = data[idx + 2];
+
+            int max = r;
+            if (g > max) max = g;
+            if (b > max) max = b;
+
+            int min = r;
+            if (g < min) min = g;
+            if (b < min) min = b;
+
+            unsigned char gray  =(max + min) / 2;
+
+            desaturate_img[idx] = gray;
+            desaturate_img[idx + 1] = gray;
+            desaturate_img[idx + 2] = gray;
+        }
+    }
+    if (write_image_data("image_out.bmp", desaturate_img, width, height)!=0){
+        free_image_data(data);
+    }
+}
+
+void mirror_vertical(char* filename){
+    int width,height,channels;
+    unsigned char*data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    unsigned char *mirror_vertical = (unsigned char*)malloc(width* height* channels);
+    
+    for (int j=0; j<height; j++) {
+        for (int i=0; i<width; i++) {
+
+            int src_idx = (j*width + i) * channels;
+            int out_idx = ((height -1 - j) * width + i) * channels;
+
+            for (int c=0; c<channels; c++){
+                mirror_vertical[out_idx + c] = data[src_idx + c];
+            }
+        }
+    }
+    
+    if (write_image_data("image_out.bmp", mirror_vertical, width, height)!=0){
+        free_image_data(data);
+    }
+}
+
+void scale_crop(char *filename, int x, int y, int new_width, int new_height){
+    int width,height,channels;
+    unsigned char*data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    unsigned char *scale_crop = (unsigned char*)malloc(new_width* new_height* channels);
+
+    int left   = x - new_width / 2;
+    int top    = y - new_height / 2;
+    
+    for (int j=0; j<new_height; j++){
+        for (int i=0; i<new_width; i++){
+            int src_x = left + i;
+            int src_y = top + j;
+            
+            if (src_x < 0 || src_x >= width || src_y < 0 || src_y >= height){
+                for (int c = 0; c< channels; c++){
+                    scale_crop[(j * new_width + i) * channels + c] = 0;
+                }
+            }
+            else{
+                int src_idx = (src_y * width + src_x) * channels;
+                int out_idx = (j * new_width + i) * channels;
+
+                for (int c = 0; c< channels; c++){
+                    scale_crop[out_idx + c] = data[src_idx + c];
+                }
+            }
+        }
+    }
+    
+    if (write_image_data("image_out.bmp", scale_crop, new_width, new_height)!=0){
+        free_image_data(data);
     }
 }
