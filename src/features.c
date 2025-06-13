@@ -16,6 +16,7 @@ void helloWorld() {
     printf("Hello World !");
 }
 
+
 void dimension (char *source_path) {
     int width , height , channel_count;
     unsigned char *data;
@@ -80,7 +81,8 @@ void max_pixel(char *filename){
             }
         }
     }
-printf("max_pixel (%d, %d): %d , %d , %d\n", xmax, ymax, r,g,b);
+printf("max_pixel (%d, %d): %d, %d, %d\n", xmax, ymax, r,g,b);
+
 }
 
 void min_pixel(char *filename){
@@ -106,7 +108,8 @@ void min_pixel(char *filename){
             }
         }
     }
-printf("min_pixel (%d, %d): %d , %d , %d\n", xmin, ymin, r,g,b);
+printf("min_pixel (%d, %d): %d, %d, %d\n", xmin, ymin, r,g,b);
+
 }
 
 void max_component(char *filename, char color){
@@ -144,7 +147,7 @@ void max_component(char *filename, char color){
             }
         }
     }
-    printf("max_component (%d, %d): %d\n", xmax, ymax, a);
+    printf("max_component %c (%d, %d): %d\n",color, xmax, ymax, a);
 
 }
 void min_component(char *filename, char color){
@@ -182,7 +185,26 @@ void min_component(char *filename, char color){
             }
         }
     }
-    printf("min_component (%d, %d): %d\n", xmin, ymin, a);
+    
+printf("min_component %c (%d, %d): %d\n",color, xmin, ymin, a);
+
+}
+void stat_report(char *filename){
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+    read_image_data (filename, &data, &width, &height, &channels);
+    FILE *fichier =fopen('stat_report.txt', 'w');
+    fprintf (fichier,'max_pixel( ');
+    max_pixel(filename);
+    fprintf(fichier,',');
+    min_pixel(filename);
+    max_component(filename, 'R');
+    max_component(filename, 'G');
+    max_component(filename, 'B');
+    min_component(filename, 'R');
+    min_component(filename, 'G');
+    min_component(filename, 'B');
+
 
 }
 void color_red( char* filename) {
