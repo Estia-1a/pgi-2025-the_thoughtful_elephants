@@ -80,7 +80,7 @@ void max_pixel(char *filename){
             }
         }
     }
-printf("max_pixel (%d, %d): %d , %d , %d\n", xmax, ymax, r,g,b);
+printf("max_pixel (%d, %d): %d, %d, %d\n", xmax, ymax, r,g,b);
 
 }
 void min_pixel(char *filename){
@@ -106,7 +106,7 @@ void min_pixel(char *filename){
             }
         }
     }
-printf("min_pixel (%d, %d): %d , %d , %d\n", xmin, ymin, r,g,b);
+printf("min_pixel (%d, %d): %d, %d, %d\n", xmin, ymin, r,g,b);
 
 }
 
@@ -145,7 +145,7 @@ void max_component(char *filename, char color){
             }
         }
     }
-    printf("max_component (%d, %d): %d\n", xmax, ymax, a);
+    printf("max_component %c (%d, %d): %d\n",color, xmax, ymax, a);
 
 }
 void min_component(char *filename, char color){
@@ -184,7 +184,7 @@ void min_component(char *filename, char color){
         }
     }
     
-printf("min_component (%d, %d): %d\n", xmin, ymin, a);
+printf("min_component %c (%d, %d): %d\n",color, xmin, ymin, a);
 
 }
 void stat_report(char *filename){
