@@ -534,3 +534,7 @@ void scale_crop(char *filename, int x, int y, int new_width, int new_height){
         free_image_data(data);
     }
 }
+void scale_nearest(char*filename,int a){
+
+    
+}
