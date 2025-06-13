@@ -120,4 +120,11 @@ if ( strncmp( configuration.command, "rotate_acw", 24 ) == 0 ) {
       int new_height = atoi(configuration.arguments[3]);
       scale_crop(configuration.filenames[0], x, y, new_width, new_height);
   }
+  if ( strncmp( configuration.command, "scale_nearest", 26 ) == 0 ) {
+   
+      int a = atoi(configuration.arguments[0]);
+      print_pixel(configuration.filenames[0], a);
+  }
+
+
 }
