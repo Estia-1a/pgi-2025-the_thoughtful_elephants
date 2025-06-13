@@ -19,6 +19,7 @@ void color_gray(char*filename);
 void color_invert(char*filename);
 void color_gray_luminance(char*filename);
 void stat_report(char* source_path);
+void mirror_horizontal(char* filename);
 void rotate_cw(char*filename);
 void rotate_acw(char*filename);
 
