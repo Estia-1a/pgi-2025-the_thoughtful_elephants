@@ -184,7 +184,26 @@ void min_component(char *filename, char color){
             }
         }
     }
-    printf("min_component (%d, %d): %d\n", xmin, ymin, a);
+    
+printf("min_component (%d, %d): %d\n", xmin, ymin, a);
+
+}
+void stat_report(char *filename){
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+    read_image_data (filename, &data, &width, &height, &channels);
+    FILE *fichier =fopen('stat_report.txt', 'w');
+    fprintf (fichier,'max_pixel( ');
+    max_pixel(filename);
+    fprintf(fichier,',');
+    min_pixel(filename);
+    max_component(filename, 'R');
+    max_component(filename, 'G');
+    max_component(filename, 'B');
+    min_component(filename, 'R');
+    min_component(filename, 'G');
+    min_component(filename, 'B');
+
 
 }
 

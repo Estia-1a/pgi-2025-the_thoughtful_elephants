@@ -81,4 +81,13 @@ int main(int argc, char **argv) {
     char color=configuration.arguments[0][0];
     min_component( configuration.filenames[0],color );
   }
+  if ( strncmp( configuration.command, "stat_report", 13 ) == 0 ) {
+    /* stat_report() function is defined in feature.h and implemented in feature.c */
+    stat_report( configuration.filenames[0]);
+  
+
+  }
+
+
+
 }
