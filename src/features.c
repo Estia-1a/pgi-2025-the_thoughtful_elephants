@@ -417,3 +417,27 @@ void mirror_horizontal(char* filename){
         free_image_data(data);
     }
 }
+
+void mirror_total(char*filename){
+     int width,height,channels;
+    unsigned char*data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    unsigned char *mirror_total = (unsigned char*)malloc(width* height* channels);
+    
+    for (int j=0; j<height; j++) {
+        for (int i=0; i<width; i++) {
+
+            int src_idx = (j*width + i) * channels;
+            int dst_idx = ((height - 1 - j) * width +(width-1-i))*channels;
+
+            for (int c=0; c<channels; c++){
+                mirror_total[dst_idx + c] = data[src_idx + c];
+            }
+        }
+    }
+    if (write_image_data("image_out.bmp", mirror_total, width, height)!=0){
+        free_image_data(mirror_total);
+    }
+}
