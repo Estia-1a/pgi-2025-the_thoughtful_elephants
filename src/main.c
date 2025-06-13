@@ -106,10 +106,11 @@ int main(int argc, char **argv) {
     /* stat_report() function is defined in feature.h and implemented in feature.c */
     mirror_horizontal( configuration.filenames[0]);
   }
-if ( strncmp( configuration.command, "rotate_acw", 24 ) == 0 ) {
+  if ( strncmp( configuration.command, "rotate_acw", 24 ) == 0 ) {
     /* rotate_acw() function is defined in feature.h and implemented in feature.c */
     rotate_acw( configuration.filenames[0]);
- }  if ( strncmp( configuration.command, "mirror_vertical", 24 ) == 0 ) {
+ }  
+  if ( strncmp( configuration.command, "mirror_vertical", 24 ) == 0 ) {
     /* stat_report() function is defined in feature.h and implemented in feature.c */
     mirror_vertical( configuration.filenames[0]);
   }
@@ -119,5 +120,9 @@ if ( strncmp( configuration.command, "rotate_acw", 24 ) == 0 ) {
       int new_width = atoi(configuration.arguments[2]);
       int new_height = atoi(configuration.arguments[3]);
       scale_crop(configuration.filenames[0], x, y, new_width, new_height);
+  }
+  if ( strncmp( configuration.command, "color_desaturate", 26 ) == 0 ) {
+    /* stat_report() function is defined in feature.h and implemented in feature.c */
+    color_desaturate( configuration.filenames[0]);
   }
 }

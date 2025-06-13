@@ -1,6 +1,7 @@
 #include <estia-image.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "features.h"
 #include "utils.h"
@@ -456,6 +457,43 @@ void scale_crop(char *filename, int x, int y, int new_width, int new_height){
     }
     
     if (write_image_data("image_out.bmp", scale_crop, new_width, new_height)!=0){
+        free_image_data(data);
+    }
+}
+
+void color_desaturate(char *filename){
+    int width,height,channels;
+    unsigned char*data;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    unsigned char *desaturate_img = (unsigned char*)malloc(width* height* channels);
+
+    for (int j=0; j<height; j++){
+        for (int i=0; i<width; i++){
+
+            int idx = (j*width + i) * channels;
+
+            int r = data[idx];
+            int g = data[idx + 1];
+            int b = data[idx + 2];
+
+            int max = r;
+            if (g > max) max = g;
+            if (b > max) max = b;
+
+            int min = r;
+            if (g < min) min = g;
+            if (b < min) min = b;
+
+            unsigned char gray  =(max + min) / 2;
+
+            desaturate_img[idx] = gray;
+            desaturate_img[idx + 1] = gray;
+            desaturate_img[idx + 2] = gray;
+        }
+    }
+    if (write_image_data("image_out.bmp", desaturate_img, width, height)!=0){
         free_image_data(data);
     }
 }
