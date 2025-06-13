@@ -1,0 +1,12 @@
+/home/runner/work/pgi-2025-the_thoughtful_elephants/pgi-2025-the_thoughtful_elephants/src/features.c:28:6: error: redefinition of ‘dimension’
+   28 | void dimension (char *source_path) {
+      |      ^~~~~~~~~
+/home/runner/work/pgi-2025-the_thoughtful_elephants/pgi-2025-the_thoughtful_elephants/src/features.c:18:6: note: previous definition of ‘dimension’ with type ‘void(char *)’
+   18 | void dimension (char *source_path){
+      |      ^~~~~~~~~
+gmake[2]: *** [CMakeFiles/freud.dir/build.make:93: CMakeFiles/freud.dir/src/features.c.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:87: CMakeFiles/freud.dir/all] Error 2
+gmake: *** [Makefile:136: all] Error 2
+
+The process '/usr/local/bin/cmake' failed with exit code 2
