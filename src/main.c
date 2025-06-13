@@ -123,7 +123,7 @@ if ( strncmp( configuration.command, "rotate_acw", 24 ) == 0 ) {
   if ( strncmp( configuration.command, "scale_nearest", 26 ) == 0 ) {
    
       int a = atoi(configuration.arguments[0]);
-      print_pixel(configuration.filenames[0], a);
+      scale_nearest(configuration.filenames[0], a);
   }
 
 
