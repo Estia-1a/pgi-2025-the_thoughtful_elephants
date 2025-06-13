@@ -109,7 +109,7 @@ int main(int argc, char **argv) {
 if ( strncmp( configuration.command, "rotate_acw", 24 ) == 0 ) {
     /* rotate_acw() function is defined in feature.h and implemented in feature.c */
     rotate_acw( configuration.filenames[0]);
- }
+  }
  
   
 if ( strncmp( configuration.command, "mirror_total", 24 ) == 0 ) {
