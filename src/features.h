@@ -22,5 +22,6 @@ void stat_report(char* source_path);
 void mirror_horizontal(char* filename);
 void rotate_cw(char*filename);
 void rotate_acw(char*filename);
+void mirror_total(char*filename);
 
 #endif
