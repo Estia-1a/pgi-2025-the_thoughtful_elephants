@@ -81,4 +81,35 @@ int main(int argc, char **argv) {
     char color=configuration.arguments[0][0];
     min_component( configuration.filenames[0],color );
   }
+
+
+  if ( strncmp( configuration.command, "color_red", 17 ) == 0 ) {
+    /* color_red() function is defined in feature.h and implemented in feature.c */
+    color_red( configuration.filenames[0]);
+  }
+
+  if ( strncmp( configuration.command, "color_green", 18 ) == 0 ) {
+    /* color_green() function is defined in feature.h and implemented in feature.c */
+    color_green( configuration.filenames[0]);
+  }
+
+  if ( strncmp( configuration.command, "color_blue", 19 ) == 0 ) {
+    /* color_blue() function is defined in feature.h and implemented in feature.c */
+    color_blue( configuration.filenames[0]);
+  }
+
+  if ( strncmp( configuration.command, "color_gray", 20 ) == 0 ) {
+    /* color_blue() function is defined in feature.h and implemented in feature.c */
+    color_gray( configuration.filenames[0]);
+  }
+  
+  if ( strncmp( configuration.command, "color_invert", 21 ) == 0 ) {
+    /* color_blue() function is defined in feature.h and implemented in feature.c */
+    color_invert( configuration.filenames[0]);
+  }
+
+  if ( strncmp( configuration.command, "color_gray_luminance", 22 ) == 0 ) {
+    /* color_blue() function is defined in feature.h and implemented in feature.c */
+    color_gray_luminance( configuration.filenames[0]);
+  }
 }

@@ -187,4 +187,111 @@ void min_component(char *filename, char color){
     printf("min_component (%d, %d): %d\n", xmin, ymin, a);
 
 }
+void color_red( char* filename) {
+    int width, height, channels;
+    unsigned char *data = NULL;
+   
+    read_image_data(filename, &data, &width, &height, &channels);
+    
+    for (int i=0; i<width*height*channels; i+=channels) {
+        data[i + 1] = 0;
+        data[i + 2] = 0;
+    }
+    
+    if (write_image_data("image_out.bmp", data, width, height)!=0){
+        free_image_data(data);
+    }
+}
+
+void color_green(char*filename){
+    int width, height, channels;
+    unsigned char *data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+    
+    for (int i=0; i<width*height*channels; i+=channels) {
+        data[i] = 0;
+        data[i + 2] = 0;
+    }
+    
+    if (write_image_data("image_out.bmp", data, width, height)!=0){
+        free_image_data(data);
+    }
+}
+
+void color_blue(char*filename){
+    int width, height, channels;
+    unsigned char *data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+    
+    for (int i=0; i<width*height*channels; i+=channels) {
+        data[i] = 0;
+        data[i + 1] = 0;
+    }
+    
+    if (write_image_data("image_out.bmp", data, width, height)!=0){
+        free_image_data(data);
+    }
+}
+
+void color_gray(char*filename){
+    int width, height, channels;
+    unsigned char *data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    for (int i=0; i<width*height*channels; i += channels){
+        unsigned char value = (data[i] + data[i + 1] + data[i+2])/3;
+        data[i]= value;
+        data[i+1]= value;
+        data[i +2]= value;
+    }
+
+     if (write_image_data("image_out.bmp", data, width, height)!=0){
+        free_image_data(data);
+    }
+}
+
+void color_invert(char*filename){
+    int width, height, channels, old_R, old_G, old_B;
+    unsigned char *data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    for (int i=0; i<width*height*channels; i += channels){
+        old_R=data[i];
+        old_G=data[i+1];
+        old_B=data[1+2];
+        data[i]=255-old_R;
+        data[i+1]=255-old_G;
+        data[i+2]= 255-old_B;
+    }
+
+    if (write_image_data("image_out.bmp", data, width, height)!=0){
+        free_image_data(data);
+    }
+}
+
+void color_gray_luminance(char*filename){
+    int width,height,channels;
+    unsigned char*data = NULL;
+
+     read_image_data(filename, &data, &width, &height, &channels);
+
+    for (int i=0; i<width*height*channels; i += channels){
+        unsigned char R=data[i];
+        unsigned char G=data[i+1];
+        unsigned char B=data[i+2];
+
+        unsigned char value=(0.21*R + 0.72*G+0.07*B);
+
+        data[i]=value;
+        data[i+1]=value;
+        data[i+2]=value;
+    }
+    if (write_image_data("image_out.bmp", data, width, height)!=0){
+        free_image_data(data);
+    }
+}
 
