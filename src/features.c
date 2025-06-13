@@ -192,20 +192,42 @@ printf("min_component %c (%d, %d): %d\n",color, xmin, ymin, a);
 
 
 
+
+
+
 }
-void stat_report(char *filename){
-    FILE *file = fopen("stat_report.txt", "w");
-    
-    fprintf(file, "Test");
-  /*fprintf(file, "%s\n\n", min_pixel);
-    fprintf(file, "%s\n\n", max_component R);
-    fprintf(file, "%s\n\n", max_component G);
-    fprintf(file, "max_component B: %d\n\n", max_component B);
-    fprintf(file, "min_component R: %d\n\n", min_component R);
-    fprintf(file, "min_component G: %d\n\n", min_component G);
-    fprintf(file, "min_component B: %d\n\n", min_component B);
-*/
-    fclose(file);
+void stat_report(char *source_path){
+    int width, height, channel_count;
+    unsigned char *data;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    FILE *stat_report;
+    stat_report = freopen("stat_report.txt", "w",stdout);
+    max_pixel(source_path);
+    printf("\n");
+    printf("\n");
+    min_pixel(source_path);
+    printf("\n");
+    printf("\n");
+    max_component(source_path,'R');
+    printf("\n");
+    printf("\n");
+    max_component(source_path,'G');
+    printf("\n");
+    printf("\n");
+    max_component(source_path,'B');
+    printf("\n");
+    printf("\n");
+    min_component(source_path,'R');
+    printf("\n");
+    printf("\n");
+    min_component(source_path,'G');
+    printf("\n");
+    printf("\n");
+    min_component(source_path,'B');
+    printf("\n");
+    printf("\n");
+    fclose(stat_report);
+    free_image_data(data);
 }
 
 
@@ -346,7 +368,7 @@ void rotate_cw(char*filename){
      }
 }
 void rotate_acw(char*filename){
-     int width,height,channels;
+    int width,height,channels;
     unsigned char*data = NULL;
 
     read_image_data(filename, &data, &width, &height, &channels);
@@ -373,7 +395,6 @@ void rotate_acw(char*filename){
      }
 }
 
-
 void mirror_horizontal(char* filename){
     int width,height,channels;
     unsigned char*data = NULL;
@@ -393,8 +414,70 @@ void mirror_horizontal(char* filename){
             }
         }
     }
-    
     if (write_image_data("image_out.bmp", mirror_horizontal, width, height)!=0){
+        free_image_data(data);
+    }
+}
+
+void mirror_total(char*filename){
+     int width,height,channels;
+    unsigned char*data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    unsigned char *mirror_total = (unsigned char*)malloc(width* height* channels);
+    
+    for (int j=0; j<height; j++) {
+        for (int i=0; i<width; i++) {
+
+            int src_idx = (j*width + i) * channels;
+            int dst_idx = ((height - 1 - j) * width +(width-1-i))*channels;
+
+            for (int c=0; c<channels; c++){
+                mirror_total[dst_idx + c] = data[src_idx + c];
+            }
+        }
+    }
+
+    if (write_image_data("image_out.bmp", mirror_total, width, height)!=0){
+        free_image_data(mirror_total);
+    }
+}
+
+
+void color_desaturate(char *filename){
+    int width,height,channels;
+    unsigned char*data;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    unsigned char *desaturate_img = (unsigned char*)malloc(width* height* channels);
+
+    for (int j=0; j<height; j++){
+        for (int i=0; i<width; i++){
+
+            int idx = (j*width + i) * channels;
+
+            int r = data[idx];
+            int g = data[idx + 1];
+            int b = data[idx + 2];
+
+            int max = r;
+            if (g > max) max = g;
+            if (b > max) max = b;
+
+            int min = r;
+            if (g < min) min = g;
+            if (b < min) min = b;
+
+            unsigned char gray  =(max + min) / 2;
+
+            desaturate_img[idx] = gray;
+            desaturate_img[idx + 1] = gray;
+            desaturate_img[idx + 2] = gray;
+        }
+    }
+    if (write_image_data("image_out.bmp", desaturate_img, width, height)!=0){
         free_image_data(data);
     }
 }
@@ -457,43 +540,6 @@ void scale_crop(char *filename, int x, int y, int new_width, int new_height){
     }
     
     if (write_image_data("image_out.bmp", scale_crop, new_width, new_height)!=0){
-        free_image_data(data);
-    }
-}
-
-void color_desaturate(char *filename){
-    int width,height,channels;
-    unsigned char*data;
-
-    read_image_data(filename, &data, &width, &height, &channels);
-
-    unsigned char *desaturate_img = (unsigned char*)malloc(width* height* channels);
-
-    for (int j=0; j<height; j++){
-        for (int i=0; i<width; i++){
-
-            int idx = (j*width + i) * channels;
-
-            int r = data[idx];
-            int g = data[idx + 1];
-            int b = data[idx + 2];
-
-            int max = r;
-            if (g > max) max = g;
-            if (b > max) max = b;
-
-            int min = r;
-            if (g < min) min = g;
-            if (b < min) min = b;
-
-            unsigned char gray  =(max + min) / 2;
-
-            desaturate_img[idx] = gray;
-            desaturate_img[idx + 1] = gray;
-            desaturate_img[idx + 2] = gray;
-        }
-    }
-    if (write_image_data("image_out.bmp", desaturate_img, width, height)!=0){
         free_image_data(data);
     }
 }

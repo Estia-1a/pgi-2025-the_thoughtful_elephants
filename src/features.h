@@ -25,5 +25,6 @@ void rotate_acw(char*filename);
 void mirror_vertical(char* filename);
 void scale_crop(char* filename, int x, int y, int new_width, int new_height);
 void color_desaturate(char* filename);
+void mirror_total(char*filename);
 
 #endif
