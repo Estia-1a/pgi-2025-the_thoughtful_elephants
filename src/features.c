@@ -192,19 +192,38 @@ printf("min_component %c (%d, %d): %d\n",color, xmin, ymin, a);
 
 
 }
-void stat_report(char *filename){
-    FILE *file = fopen("stat_report.txt", "w");
-    
-    fprintf(file, "Test");
-  /*fprintf(file, "%s\n\n", min_pixel);
-    fprintf(file, "%s\n\n", max_component R);
-    fprintf(file, "%s\n\n", max_component G);
-    fprintf(file, "max_component B: %d\n\n", max_component B);
-    fprintf(file, "min_component R: %d\n\n", min_component R);
-    fprintf(file, "min_component G: %d\n\n", min_component G);
-    fprintf(file, "min_component B: %d\n\n", min_component B);
-*/
-    fclose(file);
+void stat_report(char *source_path){
+    int width, height, channel_count;
+    unsigned char *data;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    FILE *stat_report;
+    stat_report = freopen("stat_report.txt", "w",stdout);
+    max_pixel(source_path);
+    printf("\n");
+    printf("\n");
+    min_pixel(source_path);
+    printf("\n");
+    printf("\n");
+    max_component(source_path,'R');
+    printf("\n");
+    printf("\n");
+    max_component(source_path,'G');
+    printf("\n");
+    printf("\n");
+    max_component(source_path,'B');
+    printf("\n");
+    printf("\n");
+    min_component(source_path,'R');
+    printf("\n");
+    printf("\n");
+    min_component(source_path,'G');
+    printf("\n");
+    printf("\n");
+    min_component(source_path,'B');
+    printf("\n");
+    printf("\n");
+    fclose(stat_report);
+    free_image_data(data);
 }
 
 
