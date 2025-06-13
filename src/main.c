@@ -106,6 +106,11 @@ int main(int argc, char **argv) {
     /* stat_report() function is defined in feature.h and implemented in feature.c */
     mirror_vertical( configuration.filenames[0]);
   }
-
-
+  if ( strncmp( configuration.command, "scale_crop", 25 ) == 0 ) {
+      int x = atoi(configuration.arguments[0]);
+      int y = atoi(configuration.arguments[1]);
+      int new_width = atoi(configuration.arguments[2]);
+      int new_height = atoi(configuration.arguments[3]);
+      scale_crop(configuration.filenames[0], x, y, new_width, new_height);
+  }
 }
