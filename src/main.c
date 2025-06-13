@@ -74,6 +74,10 @@ int main(int argc, char **argv) {
     char color=configuration.arguments[0][0];
     min_component( configuration.filenames[0],color );
   }
+  if ( strncmp( configuration.command, "stat_report", 17 ) == 0 ) {
+    /* color_red() function is defined in feature.h and implemented in feature.c */
+    stat_report( configuration.filenames[0]);
+  }
   if ( strncmp( configuration.command, "color_red", 17 ) == 0 ) {
     /* color_red() function is defined in feature.h and implemented in feature.c */
     color_red( configuration.filenames[0]);
