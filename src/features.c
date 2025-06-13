@@ -146,7 +146,7 @@ void max_component(char *filename, char color){
         }
     }
     printf("max_component %c (%d, %d): %d\n",color, xmax, ymax, a);
-
+    
 }
 void min_component(char *filename, char color){
     unsigned char *data = NULL;
@@ -186,25 +186,26 @@ void min_component(char *filename, char color){
     
 printf("min_component %c (%d, %d): %d\n",color, xmin, ymin, a);
 
+
+
 }
 void stat_report(char *filename){
-    unsigned char *data = NULL;
-    int width = 0, height = 0, channels = 0;
-    read_image_data (filename, &data, &width, &height, &channels);
-    FILE *fichier =fopen('stat_report.txt', 'w');
-    fprintf (fichier,'max_pixel( ');
-    max_pixel(filename);
-    fprintf(fichier,',');
-    min_pixel(filename);
-    max_component(filename, 'R');
-    max_component(filename, 'G');
-    max_component(filename, 'B');
-    min_component(filename, 'R');
-    min_component(filename, 'G');
-    min_component(filename, 'B');
+    FILE *file = fopen("stat_report.txt", "w");
+    
 
-
+    fprintf(file, "Test\n\n");
+  /*fprintf(file, "%s\n\n", min_pixel);
+    fprintf(file, "%s\n\n", max_component R);
+    fprintf(file, "%s\n\n", max_component G);
+    fprintf(file, "max_component B: %d\n\n", max_component B);
+    fprintf(file, "min_component R: %d\n\n", min_component R);
+    fprintf(file, "min_component G: %d\n\n", min_component G);
+    fprintf(file, "min_component B: %d\n\n", min_component B);
+*/
+    fclose(file);
 }
+
+
 void color_red( char* filename) {
     int width, height, channels;
     unsigned char *data = NULL;
