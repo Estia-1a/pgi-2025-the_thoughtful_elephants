@@ -189,24 +189,6 @@ void min_component(char *filename, char color){
 printf("min_component %c (%d, %d): %d\n",color, xmin, ymin, a);
 
 }
-void stat_report(char *filename){
-    unsigned char *data = NULL;
-    int width = 0, height = 0, channels = 0;
-    read_image_data (filename, &data, &width, &height, &channels);
-    FILE *fichier =fopen('stat_report.txt', 'w');
-    fprintf (fichier,'max_pixel( ');
-    max_pixel(filename);
-    fprintf(fichier,',');
-    min_pixel(filename);
-    max_component(filename, 'R');
-    max_component(filename, 'G');
-    max_component(filename, 'B');
-    min_component(filename, 'R');
-    min_component(filename, 'G');
-    min_component(filename, 'B');
-
-
-}
 void color_red( char* filename) {
     int width, height, channels;
     unsigned char *data = NULL;
@@ -336,6 +318,31 @@ void mirror_horizontal(char* filename){
     }
     
     if (write_image_data("image_out.bmp", mirror_horizontal, width, height)!=0){
+        free_image_data(data);
+    }
+}
+
+void mirror_vertical(char* filename){
+    int width,height,channels;
+    unsigned char*data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    unsigned char *mirror_vertical = (unsigned char*)malloc(width* height* channels);
+    
+    for (int j=0; j<height; j++) {
+        for (int i=0; i<width; i++) {
+
+            int src_idx = (j*width + i) * channels;
+            int out_idx = ((height -1 - j) * width + i) * channels;
+
+            for (int c=0; c<channels; c++){
+                mirror_vertical[out_idx + c] = data[src_idx + c];
+            }
+        }
+    }
+    
+    if (write_image_data("image_out.bmp", mirror_vertical, width, height)!=0){
         free_image_data(data);
     }
 }

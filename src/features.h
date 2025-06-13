@@ -20,5 +20,6 @@ void color_invert(char*filename);
 void color_gray_luminance(char*filename);
 void stat_report(char* source_path);
 void mirror_horizontal(char* filename);
+void mirror_vertical(char* filename);
 
 #endif
