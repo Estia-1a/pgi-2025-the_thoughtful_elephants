@@ -120,6 +120,9 @@ if ( strncmp( configuration.command, "rotate_acw", 24 ) == 0 ) {
       int new_height = atoi(configuration.arguments[3]);
       scale_crop(configuration.filenames[0], x, y, new_width, new_height);
   }
+  if ( strncmp( configuration.command, "mirror_total", 24 ) == 0 ) {
+    /* mirror_total() function is defined in feature.h and implemented in feature.c */
+    mirror_total( configuration.filenames[0]);
   if ( strncmp( configuration.command, "scale_nearest", 26 ) == 0 ) {
    
       int a = atoi(configuration.arguments[0]);
