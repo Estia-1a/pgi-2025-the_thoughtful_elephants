@@ -1,0 +1,14 @@
+/home/runner/work/pgi-2025-the_thoughtful_elephants/pgi-2025-the_thoughtful_elephants/src/main.c: In function ‘main’:
+/home/runner/work/pgi-2025-the_thoughtful_elephants/pgi-2025-the_thoughtful_elephants/src/main.c:126:7: error: too few arguments to function ‘print_pixel’
+  126 |       print_pixel(configuration.filenames[0], a);
+      |       ^~~~~~~~~~~
+In file included from /home/runner/work/pgi-2025-the_thoughtful_elephants/pgi-2025-the_thoughtful_elephants/src/main.c:8:
+/home/runner/work/pgi-2025-the_thoughtful_elephants/pgi-2025-the_thoughtful_elephants/src/features.h:10:6: note: declared here
+   10 | void print_pixel( char *source_path , int x, int y );
+      |      ^~~~~~~~~~~
+gmake[2]: *** [CMakeFiles/freud.dir/build.make:107: CMakeFiles/freud.dir/src/main.c.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:87: CMakeFiles/freud.dir/all] Error 2
+gmake: *** [Makefile:136: all] Error 2
+
+The process '/usr/local/bin/cmake' failed with exit code 2
