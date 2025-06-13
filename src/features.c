@@ -15,14 +15,13 @@ void helloWorld() {
     printf("Hello World !");
 }
 
-void dimension (char *source_path){
 
+void dimension (char *source_path) {
+    int width , height , channel_count;
     unsigned char *data;
-    int width, height, channel_count;
-    
-    read_image_data(source_path, &data, &width, &height, &channel_count);
-    
-    printf("Dimension : %d, %d\n",width,height);
+    read_image_data(source_path , &data , &width , &height , &channel_count);
+
+    printf("dimension: %d, %d\n",width,height);
 }
 
 void first_pixel(char *source_path) {
@@ -81,7 +80,7 @@ void max_pixel(char *filename){
             }
         }
     }
-printf("max_pixel (%d, %d): %d , %d , %d\n", xmax, ymax, r,g,b);
+printf("max_pixel (%d, %d): %d, %d, %d\n", xmax, ymax, r,g,b);
 
 }
 void min_pixel(char *filename){
@@ -107,7 +106,7 @@ void min_pixel(char *filename){
             }
         }
     }
-printf("min_pixel (%d, %d): %d , %d , %d\n", xmin, ymin, r,g,b);
+printf("min_pixel (%d, %d): %d, %d, %d\n", xmin, ymin, r,g,b);
 
 }
 
@@ -146,7 +145,7 @@ void max_component(char *filename, char color){
             }
         }
     }
-    printf("max_component (%d, %d): %d\n", xmax, ymax, a);
+    printf("max_component %c (%d, %d): %d\n",color, xmax, ymax, a);
 
 }
 void min_component(char *filename, char color){
@@ -184,7 +183,26 @@ void min_component(char *filename, char color){
             }
         }
     }
-    printf("min_component (%d, %d): %d\n", xmin, ymin, a);
+    
+printf("min_component %c (%d, %d): %d\n",color, xmin, ymin, a);
+
+}
+void stat_report(char *filename){
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+    read_image_data (filename, &data, &width, &height, &channels);
+    FILE *fichier =fopen('stat_report.txt', 'w');
+    fprintf (fichier,'max_pixel( ');
+    max_pixel(filename);
+    fprintf(fichier,',');
+    min_pixel(filename);
+    max_component(filename, 'R');
+    max_component(filename, 'G');
+    max_component(filename, 'B');
+    min_component(filename, 'R');
+    min_component(filename, 'G');
+    min_component(filename, 'B');
+
 
 }
 void color_red( char* filename) {
@@ -320,7 +338,34 @@ void rotate_cw(char*filename){
         }
     }
      if (write_image_data("image_out.bmp", rotate_90, new_width, new_height) !=0) {
-        free_image_data(data);
+        free_image_data(rotate_90);
+     }
+}
+void rotate_acw(char*filename){
+     int width,height,channels;
+    unsigned char*data = NULL;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    int new_width=height;
+    int new_height= width;
+    unsigned char *rotate_a90 = (unsigned char*)malloc(new_width* new_height* channels);
+    
+    for(int j=0; j<height; j++){
+        for(int i=0; i<width; i++){
+
+            int src_idx = (j *width +i)*channels;
+            int dst_idx = ((width -1 -i)*new_width +j)*channels;
+
+            for(int c=0; c< channels; c++){
+                rotate_a90[dst_idx + c] = data[src_idx + c];
+
+            }
+
+        }
+    }
+     if (write_image_data("image_out.bmp", rotate_a90, new_width, new_height) !=0) {
+        free_image_data(rotate_a90);
      }
 }
 
