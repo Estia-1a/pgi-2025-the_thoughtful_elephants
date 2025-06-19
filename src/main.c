@@ -134,7 +134,10 @@ int main(int argc, char **argv) {
     scale_nearest(configuration.filenames[0], a);
   }
   if ( strncmp( configuration.command, "color_desaturate", 26 ) == 0 ) {
-    /* stat_report() function is defined in feature.h and implemented in feature.c */
     color_desaturate( configuration.filenames[0]);
+  }
+  if ( strncmp( configuration.command, "scale_bilinear", 26 ) == 0 ) {
+    int X = atof(configuration.arguments[0]);
+    scale_bilinear( configuration.filenames[0], X);
   }
 }

@@ -27,5 +27,6 @@ void scale_crop(char* filename, int x, int y, int new_width, int new_height);
 void color_desaturate(char* filename);
 void mirror_total(char*filename);
 void scale_nearest(char*filename, float a);
+void scale_bilinear(char*filename, float X);
 
 #endif
