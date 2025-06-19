@@ -20,5 +20,3 @@ min_component G (35, 1337): 0
 
 
 min_component B (1078, 956): 0
-
-

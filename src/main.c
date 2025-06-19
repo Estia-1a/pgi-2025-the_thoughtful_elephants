@@ -130,7 +130,7 @@ int main(int argc, char **argv) {
     mirror_total( configuration.filenames[0]);
   }
   if ( strncmp( configuration.command, "scale_nearest", 26 ) == 0 ) {
-    int a = atoi(configuration.arguments[0]);
+    float a = atof(configuration.arguments[0]);
     scale_nearest(configuration.filenames[0], a);
   }
   if ( strncmp( configuration.command, "color_desaturate", 26 ) == 0 ) {
