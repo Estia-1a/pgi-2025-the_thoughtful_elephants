@@ -552,12 +552,10 @@ void scale_nearest(char*filename,float a){
     int new_width = width*a;
     int new_height = height*a;
     unsigned char *scaled_img = (unsigned char*)malloc(new_width*new_height*channels*sizeof (unsigned char));
-    int x=0;
-    int y=0;
     int positionx=0;
     int positiony=0;
-    for (y=0 ; y< new_height ; y++ ){
-        for (x=0 ; x< new_width ; x++ ){
+    for (int y=0 ; y< new_height ; y++ ){
+        for (int x=0 ; x< new_width ; x++ ){
             positionx=x/a;
             positiony=y/a;
             scaled_img[(y*new_height+x)*channels] = data[(positiony*height+positionx)*channels];
