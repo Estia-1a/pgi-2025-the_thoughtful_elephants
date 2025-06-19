@@ -132,8 +132,8 @@ int main(int argc, char **argv) {
   if ( strncmp( configuration.command, "color_desaturate", 26 ) == 0 ) {
     color_desaturate( configuration.filenames[0]);
   }
-  if ( strncmp( configuration.command, "scale_bilinear", 26 ) == 0 ) {
-    int X = atof(configuration.arguments[0]);
+  if ( strncmp( configuration.command, "scale_bilinear", 27 ) == 0 ) {
+    float X = atof(configuration.arguments[0]);
     scale_bilinear( configuration.filenames[0], X);
   }
 }

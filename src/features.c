@@ -544,32 +544,49 @@ void scale_crop(char *filename, int x, int y, int new_width, int new_height){
     }
 }
 
-void scale_bilinear(char*filename,float a){
-    int width,height,channels;
-    unsigned char*data;
-
+void scale_bilinear(char *filename, float X){
+    int width, height, channels;
+    unsigned char* data;
     read_image_data(filename, &data, &width, &height, &channels);
+   
+    int new_width = width * X;
+    int new_height = height * X;
 
-    int new_width = a * width;
-    int new_height = a * height;
+    unsigned char *bilinear_img = (unsigned char *)malloc(new_width * new_height * channels );
+ 
+    for (int j = 0; j < new_height; j++) {
+        for (int i = 0; i < new_width; i++) {
+            int posX = (i / X);
+            int posY = (j / X);
+ 
+            int x1 = posX;
+            int y1 = posY;
+            int x2, y2; 
+            
+            if (posX +1 < width){
+                x2 = x1 + 1;
+            }
+            else{
+                x2 = x1;
+            }
+            if (posY +1 < height){
+                y2 = y1 + 1;
+            }
+            else{
+                y2 = y1;
+            }
 
-    unsigned char* scaled_img = (unsigned char*)malloc(new_width* new_height* channels);
+            float dx = posX - x1;
+            float dy = posY - y1;
 
-    for (int j=0; j< new_height; j++){
-        for (int i=0; i< new_width; i++){
-            int src_x = i * a;
-            int src_y = j * a;
+            for (int c = 0; c < channels; c++) {
 
-            int src_idx = (src_x + src_y * width) * channels;
-            int out_idx = (j * new_width + i) * channels;
-
-            for (int c=0; c<channels; c++){
-                scaled_img[out_idx] = data[src_idx + c];
+                bilinear_img[(j * new_width + i)* channels + c] = (unsigned char) (1 - dx) * (1 - dy) * data[(y1 * width + x1) * channels + c] + dx * (1 - dy) * data[(y1 * width + x2) * channels + c] + (1 - dx) * dy * data[(y2 * width + x1) * channels + c] + dx * dy * data[(y2 * width + x2) * channels + c];
             }
         }
     }
-    if (write_image_data("image_out.bmp", scaled_img, new_width, new_height)!=0){
+   
+    if (write_image_data("image_out.bmp", bilinear_img, new_width, new_height)!=0){
         free_image_data(data);
     }
-
 }
