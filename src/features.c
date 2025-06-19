@@ -504,28 +504,37 @@ void scale_crop(char *filename, int x, int y, int new_width, int new_height){
 
     read_image_data(filename, &data, &width, &height, &channels);
 
+    int left = x - new_width / 2;
+    int top = y - new_height / 2;
+    int right = x + new_width / 2;
+    int bottom = y + new_height / 2; 
+
+    if (left < 0){
+        new_width += left ;
+        left = 0;
+    }
+    if(right >= width){
+        new_width -= right;
+    }
+    if(top < 0){
+        new_height += top;
+        top = 0;
+    }
+    if(bottom >= height){
+        new_height -= bottom;
+    }
+    
     unsigned char *scale_crop = (unsigned char*)malloc(new_width* new_height* channels);
 
-    int left   = x - new_width / 2;
-    int top    = y - new_height / 2;
-    
     for (int j=0; j<new_height; j++){
         for (int i=0; i<new_width; i++){
             int src_x = left + i;
             int src_y = top + j;
-            
-            if (src_x < 0 || src_x >= width || src_y < 0 || src_y >= height){
-                for (int c = 0; c< channels; c++){
-                    scale_crop[(j * new_width + i) * channels + c] = 0;
-                }
-            }
-            else{
-                int src_idx = (src_y * width + src_x) * channels;
-                int out_idx = (j * new_width + i) * channels;
+            int src_idx = (src_y * width + src_x) * channels;
+            int out_idx = (j * new_width + i) * channels;
 
-                for (int c = 0; c< channels; c++){
-                    scale_crop[out_idx + c] = data[src_idx + c];
-                }
+            for (int c = 0; c< channels; c++){
+                scale_crop[out_idx + c] = data[src_idx + c];
             }
         }
     }
@@ -534,7 +543,33 @@ void scale_crop(char *filename, int x, int y, int new_width, int new_height){
         free_image_data(data);
     }
 }
-void scale_nearest(char*filename,int a){
 
-   
+void scale_bilinear(char*filename,float a){
+    int width,height,channels;
+    unsigned char*data;
+
+    read_image_data(filename, &data, &width, &height, &channels);
+
+    int new_width = a * width;
+    int new_height = a * height;
+
+    unsigned char* scaled_img = (unsigned char*)malloc(new_width* new_height* channels);
+
+    for (int j=0; j< new_height; j++){
+        for (int i=0; i< new_width; i++){
+            int src_x = i * a;
+            int src_y = j * a;
+
+            int src_idx = (src_x + src_y * width) * channels;
+            int out_idx = (j * new_width + i) * channels;
+
+            for (int c=0; c<channels; c++){
+                scaled_img[out_idx] = data[src_idx + c];
+            }
+        }
+    }
+    if (write_image_data("image_out.bmp", scaled_img, new_width, new_height)!=0){
+        free_image_data(data);
+    }
+
 }
