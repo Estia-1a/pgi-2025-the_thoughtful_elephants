@@ -558,9 +558,9 @@ void scale_nearest(char*filename,float a){
         for (int x=0 ; x< new_width ; x++ ){
             positionx=x/a;
             positiony=y/a;
-            scaled_img[(y*new_height+x)*channels] = data[(positiony*height+positionx)*channels];
-            scaled_img[(y*new_height+x)*channels+1] = data[(positiony*height+positionx)*channels+1];
-            scaled_img[(y*new_height+x)*channels+2] = data[(positiony*height+positionx)*channels+2];
+            scaled_img[(y*new_width+x)*channels] = data[(positiony*width+positionx)*channels];
+            scaled_img[(y*new_width+x)*channels+1] = data[(positiony*width+positionx)*channels+1];
+            scaled_img[(y*new_width+x)*channels+2] = data[(positiony*width+positionx)*channels+2];
         }   
     }
     if (write_image_data("image_out.bmp", scaled_img, new_width, new_height)!=0){
