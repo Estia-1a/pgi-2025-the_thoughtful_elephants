@@ -141,3 +141,5 @@ int main(int argc, char **argv) {
     scale_bilinear( configuration.filenames[0], X);
   }
 }
+
+
