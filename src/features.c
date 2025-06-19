@@ -514,14 +514,14 @@ void scale_crop(char *filename, int x, int y, int new_width, int new_height){
         left = 0;
     }
     if(right >= width){
-        new_width -= (width - right);
+        new_width -= (width + right);
     }
     if(top < 0){
         new_height += top;
         top = 0;
     }
     if(bottom >= height){
-        new_height -= (height - bottom);
+        new_height -= (height + bottom);
     }
     
     unsigned char *scale_crop = (unsigned char*)malloc(new_width* new_height* channels);
