@@ -543,7 +543,33 @@ void scale_crop(char *filename, int x, int y, int new_width, int new_height){
         free_image_data(data);
     }
 }
+void scale_nearest(char*filename,float a){
+    int width;
+    int height;
+    int channels;
+    unsigned char* data;
+    read_image_data(filename, &data, &width, &height, &channels);
+    int new_width = width*a;
+    int new_height = height*a;
+    unsigned char *scaled_img = (unsigned char*)malloc(new_width*new_height*channels*sizeof (unsigned char));
+    int x=0;
+    int y=0;
+    int positionx=0;
+    int positiony=0;
+    for (y=0 ; y< new_height ; y++ ){
+        for (x=0 ; x< new_width ; x++ ){
+            positionx=x/a;
+            positiony=y/a;
+            scaled_img[(y*new_height+x)*channels] = data[(positiony*height+positionx)*channels];
+            scaled_img[(y*new_height+x)*channels+1] = data[(positiony*height+positionx)*channels+1];
+            scaled_img[(y*new_height+x)*channels+2] = data[(positiony*height+positionx)*channels+2];
+        }   
+    }
+    if (write_image_data("image_out.bmp", scaled_img, new_width, new_height)!=0){
+        free_image_data(data);
+    }
 
+}
 void scale_bilinear(char *filename, float X){
     int width, height, channels;
     unsigned char* data;

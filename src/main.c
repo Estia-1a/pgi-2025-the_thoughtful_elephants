@@ -129,6 +129,10 @@ int main(int argc, char **argv) {
     /* mirror_total() function is defined in feature.h and implemented in feature.c */
     mirror_total( configuration.filenames[0]);
   }
+  if ( strncmp( configuration.command, "scale_nearest", 26 ) == 0 ) {
+    float a = atof(configuration.arguments[0]);
+    scale_nearest(configuration.filenames[0], a);
+  }
   if ( strncmp( configuration.command, "color_desaturate", 26 ) == 0 ) {
     color_desaturate( configuration.filenames[0]);
   }
